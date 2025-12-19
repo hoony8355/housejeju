@@ -6,7 +6,6 @@ import {
   Users, 
   Zap, 
   Target, 
-  Globe, 
   XCircle, 
   Network,
   Award,
@@ -25,8 +24,8 @@ const translations = {
     nav: { overview: '프로그램 가치', schedule: '로드맵', outcomes: '기대 성과', apply: '지금 지원하기' },
     hero: {
       badge: '14-Day Global Entry Camp',
-      title: <>GLOBAL ENTRY<br /><span className="text-gradient uppercase">BOOSTING CAMP</span></>,
-      desc: <>글로벌 진출을 꿈꾸는 창업가를 위한 <span className="text-white font-bold border-b-2 border-blue-500/50">14일간의 숙박형 집중 부스팅 프로그램.</span> 제주에서 3개국 파운더들과 함께 시장 진입을 끝장냅니다.</>,
+      title: <>UNDERDOGS<br /><span className="text-gradient uppercase tracking-tighter">HOUSE JEJU</span></>,
+      desc: <>글로벌 진출을 꿈꾸는 창업가를 위한<br /><span className="text-white font-bold border-b-2 border-blue-500/50">14일간의 숙박형 집중 부스팅 프로그램.</span><br />제주에서 3개국 파운더들과 함께 시장 진입을 끝장냅니다.</>,
       cta: '프로그램 살펴보기',
       loc: 'Jeju, South Korea'
     },
@@ -62,7 +61,7 @@ const translations = {
     },
     outcomes: {
       title: "프로그램 종료 후 당신이 얻게 될 것",
-      card1: { title: <>현지 창업가가 검증한<br />실전 진출 리포트</>, desc: '추측이 아닌 실제 현지 반응을 기반으로 한 타겟팅, 프라이싱, 유통 전략이 담긴 50페이지 분량의 실행 보고서' },
+      card1: { title: <>현지 창업가가 검증한<br />실전 진출 리포트</>, desc: '추측이 아닌 실제 현지 반응을 기반으로 한 타켓팅, 프라이싱, 유통 전략이 담긴 50페이지 분량의 실행 보고서' },
       card2: { title: <>글로벌 VC 매칭 &<br />파트너십 확약</>, desc: '단순 만남을 넘어선 1:1 VC 미팅 기회와 현지 파트너사와의 PoC 협업 기회 확보' }
     },
     footer: {
@@ -74,8 +73,8 @@ const translations = {
     nav: { overview: 'Value', schedule: 'Roadmap', outcomes: 'Outcomes', apply: 'Apply' },
     hero: {
       badge: '14-Day Global Entry Camp',
-      title: <>GLOBAL ENTRY<br /><span className="text-gradient uppercase">BOOSTING CAMP</span></>,
-      desc: <>A <span className="text-white font-bold border-b-2 border-blue-500/50">14-day residential boosting camp</span> for founders dreaming of global expansion. Finish your market entry strategy with 3-nation founders in Jeju.</>,
+      title: <>UNDERDOGS<br /><span className="text-gradient uppercase tracking-tighter">HOUSE JEJU</span></>,
+      desc: <>For founders dreaming of global expansion,<br /><span className="text-white font-bold border-b-2 border-blue-500/50">A 14-day residential intensive boosting program.</span><br />Finalize your market entry with 3-nation founders in Jeju.</>,
       cta: 'Explore Program',
       loc: 'Jeju, South Korea'
     },
@@ -123,17 +122,17 @@ const translations = {
     nav: { overview: '価値', schedule: 'ロードマップ', outcomes: '成果', apply: '応募する' },
     hero: {
       badge: '14-Day Global Entry Camp',
-      title: <>GLOBAL ENTRY<br /><span className="text-gradient uppercase">BOOSTING CAMP</span></>,
-      desc: <>海外進出を夢見る起業家のための<span className="text-white font-bold border-b-2 border-blue-500/50">14日間の宿泊型集中ブースティングプログラム。</span>済州で3カ国のファウンダーと共に市場参入を完遂します。</>,
+      title: <>UNDERDOGS<br /><span className="text-gradient uppercase tracking-tighter">HOUSE JEJU</span></>,
+      desc: <>海外進출을 꿈꾸는 起業家のための<br /><span className="text-white font-bold border-b-2 border-blue-500/50">14日間の宿泊型集中ブースティングプログラム。</span><br />済州で3カ国のファウンダーと共に市場参入を完遂します。</>,
       cta: 'プログラムを見る',
       loc: 'Jeju, South Korea'
     },
     philosophy: {
       title: <>왜 언더독스 하우스인가?</>,
-      desc: "単なる休息や講義ではありません。検証された起業家たちと専門コーチ가 결합하여 24時間体制でビジネスを加速させます。",
+      desc: "単なる休息や講義ではありません。検証された起業家たちと専門コーチが結合して24時間体制でビジネスを加速させます。",
       values: [
         { icon: <Users />, title: "選抜されたCEOピアフィードバック", text: "厳格な基準で選ばれた3カ国の起業家たちが、互いのビジネスを鋭く検証します。" },
-        { icon: <Award />, title: "전문가 의한 コーチング", text: "数千人の起業家を育成したノウハウを持つ専任コーチが密着ガイドします。" },
+        { icon: <Award />, title: "専門家によるコーチング", text: "数千人の起業家を育成したノウハウを持つ専任コーチが密着ガイドします。" },
         { icon: <Clock />, title: "24時間没入環境", text: "邪魔な要素がない済州で仲間と寝食を共にし、海外進出だけに集中します。" },
         { icon: <Network />, title: "パートナーシップ & VC", text: "単なる交流を超え、実質的な現地パートナーシップ締結とVCマッチングを支援します。" }
       ]
@@ -154,23 +153,21 @@ const translations = {
       title: '現実的な市場参入のための設計',
       details: {
         p1: { title: "Trust & Share", more: "互いの底辺まで共有する時間です。単なる成果自慢ではなく、海外進出時の最も恐ろしい問いをさらけ出し、仲間の冷静なフィードバックを通じて一歩目を踏み出します。" },
-        p2: { title: "Validation Task Force", more: "現地のファウンダーが直接参加し、ターゲット市場のリアリティを調査します。アンダードッグスのコーチと共に価格政策、参入チャネル、現地PoCシナリオを具体化します。" },
-        p3: { title: "Network & Output", more: "導き出されたプランをグローバルVCの前でブリーフィングします。発表だけで終わらず、実際の現地協業が可能なパートナーとのLoI（意向表明書）締결など実質的な成果を作ります。" }
+        p2: { title: "Validation Task Force", more: "現地のファウンダーが直接参加し、ターゲット市場のリアリティを調査します。アンダードッグスのコーチと共に価格政策、参入チャネル、現地PoCシナ리오を具体化します。" },
+        p3: { title: "Network & Output", more: "導き出されたプランをグローバルVCの前でブリーフィングします。発表だけで終わらず、実際の現地協業が可能なパートナーとのLoI（意向表明書）締結など実質的な成果を作ります。" }
       }
     },
     outcomes: {
       title: "プログラム終了後に得られるもの",
-      card1: { title: <>現地起業家が検証した<br />実戦進出レポート</>, desc: '推測ではなく実際の現地反応に基づいたターゲット設定、プライシング、流通戦略が盛り込まれた実行報告書' },
-      card2: { title: <>グローバルVCマッチング &<br />パートナーシップ確約</>, desc: '単なる出会いを超えた1:1のVCミー팅機会と現地パートナー社とのPoC協業機会の確保' }
+      card1: { title: <>現地起業家が検証した<br />実戦進出レポート</>, desc: '推測ではなく実際の現地反応に基づいたターゲット設定、プライ싱、流通戦略が盛り込まれた実行報告書' },
+      card2: { title: <>グローバルVCマッチング &<br />パートナーシップ確약</>, desc: '単なる出会いを超えた1:1のVCミーティング機会と現地パートナー社とのPoC協業機会の確保' }
     },
     footer: {
       cta: '今すぐ挑戦する',
-      desc: '2025년, 당신의 비즈니스가 국경을 넘는 가장 확실한 14일.'
+      desc: '2025年、あなたのビジネスが国境を越える最も確実な14日間。'
     }
   }
 };
-
-// --- Custom Modal Component ---
 
 const Modal = ({ isOpen, onClose, title, content }: { isOpen: boolean, onClose: () => void, title: string, content: string }) => {
   if (!isOpen) return null;
@@ -189,8 +186,6 @@ const Modal = ({ isOpen, onClose, title, content }: { isOpen: boolean, onClose: 
     </div>
   );
 };
-
-// --- Main App Component ---
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -370,7 +365,7 @@ const App: React.FC = () => {
           <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tighter uppercase">{t.footer.cta}</h2>
           <p className="text-zinc-500 mb-16 max-w-xl mx-auto text-xl leading-relaxed">{t.footer.desc}</p>
           <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-4 bg-white text-black px-20 py-7 rounded-full font-black text-2xl hover:bg-blue-600 hover:text-white transition-all shadow-2xl">
-            {translations[lang].footer.cta} <ExternalLink size={24} />
+            {t.footer.cta} <ExternalLink size={24} />
           </a>
         </div>
         <div className="mt-40 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-zinc-600 text-[10px] font-black uppercase tracking-[0.2em] gap-8">
