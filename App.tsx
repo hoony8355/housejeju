@@ -25,7 +25,7 @@ const translations = {
     hero: {
       badge: '14-Day Global Entry Camp',
       title: <>UNDERDOGS<br /><span className="text-gradient uppercase tracking-tighter">HOUSE JEJU</span></>,
-      desc: <>글로벌 진출을 꿈꾸는 창업가를 위한<br /><span className="text-white font-bold border-b-2 border-blue-500/50">14일간의 숙박형 집중 부스팅 프로그램.</span><br />제주에서 3개국 파운더들과 함께 시장 진입을 끝장냅니다.</>,
+      desc: <>글로벌 진출을 꿈꾸는 창업가를 위한<br /><span className="text-white font-bold border-b-2 border-blue-500/50">14일간의 숙박형 집중 부스팅 프로그램.</span><br />제주에서 3개국 파운더들과 함께 시장 진입을 정복합니다.</>,
       cta: '프로그램 살펴보기',
       loc: 'Jeju, South Korea'
     },
