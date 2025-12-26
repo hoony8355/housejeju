@@ -485,17 +485,21 @@ const App: React.FC = () => {
       </nav>
 
       {/* Hero Section */}
-      <header className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-black">
-        <div className="absolute inset-0 -z-20 overflow-hidden">
-          {/* Enhanced Black & White Image Background - Real Jeju Basalt/Waves */}
+      <header className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden">
+        {/* Background Image Layer: Ensure Z-index is handled correctly */}
+        <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=2000&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2000&auto=format&fit=crop" 
             alt="Jeju Dark Volcanic Coast" 
-            className="w-full h-full object-cover grayscale contrast-125 brightness-50 animate-ken-burns"
+            className="w-full h-full object-cover grayscale contrast-125 brightness-[0.4] animate-ken-burns opacity-100"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black -z-10" />
-        <div className="animate-fade-in-up px-6 relative z-10 max-w-6xl w-full">
+        
+        {/* Gradient Overlay Layer: Z-index 10 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black z-10" />
+        
+        {/* Content Layer: Z-index 20 */}
+        <div className="animate-fade-in-up px-6 relative z-20 max-w-6xl w-full">
           <span className="px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] bg-blue-600/20 text-blue-400 border border-blue-500/30 mb-10 inline-block backdrop-blur-md">
             {t.hero.badge}
           </span>
