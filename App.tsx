@@ -14,14 +14,18 @@ import {
   MessageCircle,
   Briefcase,
   Laptop,
-  Zap
+  Zap,
+  ChevronRight,
+  ChevronLeft,
+  Building2,
+  Rocket
 } from 'lucide-react';
 
 // --- Types ---
 type Language = 'ko' | 'en' | 'ja' | 'id';
 
 // --- Constants ---
-const APPLY_URL = "https://forms.gle/your-google-form-url"; 
+// const APPLY_URL = "https://forms.gle/your-google-form-url"; // Removed in favor of internal form
 
 const translations = {
   ko: {
@@ -40,10 +44,10 @@ const translations = {
     specs: {
       title: "참여 대상 및 규모",
       items: [
-        { label: "기간", value: "2025년 5월 (본편)", icon: <Calendar size={20} /> },
+        { label: "기간", value: "2026년 5월 7일부터 5월 20일", icon: <Calendar size={20} /> },
         { label: "장소", value: "제주도 일대 (숙소+오피스)", icon: <MapPin size={20} /> },
         { label: "대상", value: "실행력 있는 창업가 & C-Level", icon: <Briefcase size={20} /> },
-        { label: "규모", value: "4개국 소수 정예 (KR, JP, IN, ID)", icon: <Users size={20} /> },
+        { label: "규모", value: "4개국(한국, 일본, 인도, 인도네시아) 8개 기업", icon: <Users size={20} /> },
       ]
     },
     philosophy: {
@@ -119,7 +123,7 @@ const translations = {
     },
     footer: {
       cta: '성장을 위한 최고의 환경이 준비되었습니다.',
-      desc: '지금 지원하고, 2025년 가장 밀도 높은 14일을 경험하세요.'
+      desc: '지금 지원하고, 2026년 가장 밀도 높은 14일을 경험하세요.'
     }
   },
   en: {
@@ -138,10 +142,10 @@ const translations = {
     specs: {
       title: "Program Specs",
       items: [
-        { label: "Period", value: "May 2025", icon: <Calendar size={20} /> },
+        { label: "Period", value: "May 7 - May 20, 2026", icon: <Calendar size={20} /> },
         { label: "Location", value: "Jeju Island (Stay + Office)", icon: <MapPin size={20} /> },
         { label: "Target", value: "Action-oriented Founders", icon: <Briefcase size={20} /> },
-        { label: "Scale", value: "Elite 4 Nations (KR, JP, IN, ID)", icon: <Users size={20} /> },
+        { label: "Scale", value: "8 Companies (4 Nations)", icon: <Users size={20} /> },
       ]
     },
     philosophy: {
@@ -217,7 +221,7 @@ const translations = {
     },
     footer: {
       cta: 'The best environment for growth is ready.',
-      desc: 'Apply now and experience the most immersive 14 days of 2025.'
+      desc: 'Apply now and experience the most immersive 14 days of 2026.'
     }
   },
   ja: {
@@ -236,10 +240,10 @@ const translations = {
     specs: {
       title: "参加対象および規模",
       items: [
-        { label: "期間", value: "2025年 5月 (本編)", icon: <Calendar size={20} /> },
+        { label: "期間", value: "2026年 5月7日 - 5月20日", icon: <Calendar size={20} /> },
         { label: "場所", value: "済州島 (宿泊+オフィス)", icon: <MapPin size={20} /> },
         { label: "対象", value: "実行力のある起業家 & C-Level", icon: <Briefcase size={20} /> },
-        { label: "規模", value: "4カ国 少数精鋭 (KR, JP, IN, ID)", icon: <Users size={20} /> },
+        { label: "規模", value: "4カ国 8社 (KR, JP, IN, ID)", icon: <Users size={20} /> },
       ]
     },
     philosophy: {
@@ -314,8 +318,8 @@ const translations = {
       ]
     },
     footer: {
-      cta: '成長のための最高の環境が整いました。',
-      desc: '지금 지원하고, 2025년 가장 밀도 높은 14일을 경험하세요.'
+      cta: '성장을 위한 최고의 환경이 준비되었습니다.',
+      desc: '지금 지원하고, 2026년 가장 밀도 높은 14일을 경험하세요.'
     }
   },
   id: {
@@ -334,10 +338,10 @@ const translations = {
     specs: {
       title: "Spesifikasi Program",
       items: [
-        { label: "Periode", value: "Mei 2025 (Utama)", icon: <Calendar size={20} /> },
+        { label: "Periode", value: "7 Mei - 20 Mei 2026", icon: <Calendar size={20} /> },
         { label: "Lokasi", value: "Pulau Jeju (Akomodasi + Kantor)", icon: <MapPin size={20} /> },
         { label: "Target", value: "Founder & C-Level Eksekutor", icon: <Briefcase size={20} /> },
-        { label: "Skala", value: "Elite 4 Negara (KR, JP, IN, ID)", icon: <Users size={20} /> },
+        { label: "Skala", value: "8 Perusahaan (4 Negara)", icon: <Users size={20} /> },
       ]
     },
     philosophy: {
@@ -413,7 +417,7 @@ const translations = {
     },
     footer: {
       cta: 'Lingkungan terbaik untuk pertumbuhan sudah siap.',
-      desc: 'Daftar sekarang dan rasakan 14 hari paling intensif di tahun 2025.'
+      desc: 'Daftar sekarang dan rasakan 14 hari paling intensif di tahun 2026.'
     }
   }
 };
@@ -436,10 +440,191 @@ const Modal = ({ isOpen, onClose, title, content }: { isOpen: boolean, onClose: 
   );
 };
 
+// --- Application Form Component ---
+const ApplyOverlay = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const [formData, setFormData] = useState({
+    // Step 1: Basic Info
+    companyName: '',
+    website: '',
+    founderName: '',
+    email: '',
+    stage: 'Seed', // Seed, Pre-A, Series A, etc.
+    teamSize: '',
+    
+    // Step 2: Differentiation (변별력)
+    problem: '',
+    solution: '',
+    advantage: '', // Unfair Advantage / Competitive Edge
+    motivation: '', // Why this program?
+  });
+
+  if (!isOpen) return null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleNext = () => setStep(step + 1);
+  const handleBack = () => setStep(step - 1);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      console.log('Application Submitted:', formData);
+      setIsSubmitting(false);
+      setIsSuccess(true);
+    }, 1500);
+  };
+
+  if (isSuccess) {
+    return (
+      <div className="fixed inset-0 z-[200] bg-black flex items-center justify-center p-6 animate-fade-in-up">
+        <div className="max-w-xl w-full text-center">
+          <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-blue-500/50">
+            <CheckCircle2 size={48} className="text-white" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tighter">지원해 주셔서<br/>감사합니다.</h2>
+          <p className="text-zinc-400 text-lg mb-12 leading-relaxed">
+            제출하신 지원서는 꼼꼼하게 검토 후,<br/>
+            이메일로 결과를 안내해 드리겠습니다.
+          </p>
+          <button onClick={onClose} className="px-10 py-4 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-colors">
+            홈으로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="fixed inset-0 z-[200] bg-black overflow-y-auto">
+      <div className="min-h-screen flex flex-col max-w-4xl mx-auto px-6 py-20 relative animate-fade-in-up">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-12">
+           <div>
+             <span className="text-blue-500 font-bold tracking-widest text-xs uppercase mb-2 block">Application Process</span>
+             <h2 className="text-3xl font-black tracking-tighter">참가 신청서</h2>
+           </div>
+           <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors">
+             <XCircle size={32} />
+           </button>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full bg-zinc-900 h-1 rounded-full mb-16 overflow-hidden">
+          <div 
+            className="h-full bg-blue-600 transition-all duration-500 ease-out"
+            style={{ width: step === 1 ? '50%' : '100%' }}
+          />
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex-1">
+          {step === 1 && (
+            <div className="space-y-8 animate-fade-in-up">
+              <h3 className="text-2xl font-bold flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-sm font-black">1</span>
+                기업 기본 정보
+              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Company Name</label>
+                  <input required name="companyName" value={formData.companyName} onChange={handleChange} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white" placeholder="기업명을 입력하세요" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Website / Link</label>
+                  <input required name="website" value={formData.website} onChange={handleChange} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white" placeholder="https://" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Founder Name</label>
+                  <input required name="founderName" value={formData.founderName} onChange={handleChange} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white" placeholder="성함" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Email</label>
+                  <input required type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white" placeholder="이메일 주소" />
+                </div>
+                 <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Investment Stage</label>
+                  <select name="stage" value={formData.stage} onChange={handleChange} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white appearance-none">
+                    <option value="Bootstrapped">Bootstrapped</option>
+                    <option value="Seed">Seed</option>
+                    <option value="Pre-A">Pre-A</option>
+                    <option value="Series A">Series A</option>
+                    <option value="Series B+">Series B+</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Team Size</label>
+                  <input required name="teamSize" value={formData.teamSize} onChange={handleChange} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white" placeholder="ex) 12명" />
+                </div>
+              </div>
+
+              <div className="pt-8 flex justify-end">
+                <button type="button" onClick={handleNext} className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all flex items-center gap-2">
+                  다음 단계 <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-8 animate-fade-in-up">
+              <div className="space-y-2">
+                 <h3 className="text-2xl font-bold flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-black">2</span>
+                    핵심 역량 및 차별성
+                  </h3>
+                 <p className="text-zinc-500 text-sm ml-11">선발 심사 시 가장 중요하게 검토하는 항목입니다. 구체적으로 작성해 주세요.</p>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2"><Target size={14}/> Core Problem & Solution</label>
+                  <p className="text-zinc-500 text-sm mb-2">해결하고자 하는 핵심 문제와 귀사의 솔루션은 무엇입니까?</p>
+                  <textarea required name="problem" value={formData.problem} onChange={handleChange} rows={4} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white resize-none" placeholder="문제와 솔루션을 구체적으로 설명해주세요." />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2"><Rocket size={14}/> Unique Selling Proposition (USP)</label>
+                  <p className="text-zinc-500 text-sm mb-2">경쟁사 대비 귀사만이 가진 압도적인 기술적/사업적 우위(Unfair Advantage)는 무엇입니까?</p>
+                  <textarea required name="advantage" value={formData.advantage} onChange={handleChange} rows={4} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white resize-none" placeholder="기술력, 특허, 독점적 파트너십, 데이터 등 구체적인 근거를 포함해주세요." />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2"><Building2 size={14}/> Motivation & Goal</label>
+                  <p className="text-zinc-500 text-sm mb-2">이번 제주 레지던시를 통해 해결하고 싶은 단 하나의 질문(Main Question)은 무엇입니까?</p>
+                  <textarea required name="motivation" value={formData.motivation} onChange={handleChange} rows={4} className="w-full bg-zinc-900 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-blue-500 transition-colors text-white resize-none" placeholder="예: 인도네시아 시장 진출을 위한 PMF 검증 등" />
+                </div>
+              </div>
+
+              <div className="pt-8 flex justify-between items-center">
+                 <button type="button" onClick={handleBack} className="text-zinc-500 hover:text-white px-4 py-2 font-bold flex items-center gap-2">
+                  <ChevronLeft size={18} /> 이전
+                </button>
+                <button type="submit" disabled={isSubmitting} className="bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-black transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isSubmitting ? '제출 중...' : '신청서 제출하기'}
+                </button>
+              </div>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lang, setLang] = useState<Language>('ko');
   const [modalData, setModalData] = useState<{ title: string, content: string } | null>(null);
+  const [isApplyOpen, setIsApplyOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -477,9 +662,13 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] px-8 py-3.5 bg-blue-600 text-white rounded-full hover:bg-white hover:text-black transition-all shadow-xl shadow-blue-500/20">
-              {t.nav.apply} <ExternalLink size={14} />
-            </a>
+            {/* Replaced external link with internal open handler */}
+            <button 
+              onClick={() => setIsApplyOpen(true)}
+              className="hidden sm:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] px-8 py-3.5 bg-blue-600 text-white rounded-full hover:bg-white hover:text-black transition-all shadow-xl shadow-blue-500/20"
+            >
+              {t.nav.apply} <ArrowRight size={14} />
+            </button>
           </div>
         </div>
       </nav>
@@ -630,9 +819,9 @@ const App: React.FC = () => {
         <div className="relative z-10">
           <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tighter uppercase">{t.footer.cta}</h2>
           <p className="text-zinc-500 mb-16 max-w-xl mx-auto text-xl leading-relaxed">{t.footer.desc}</p>
-          <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-4 bg-white text-black px-20 py-7 rounded-full font-black text-2xl hover:bg-blue-600 hover:text-white transition-all shadow-2xl">
+          <button onClick={() => setIsApplyOpen(true)} className="inline-flex items-center gap-4 bg-white text-black px-20 py-7 rounded-full font-black text-2xl hover:bg-blue-600 hover:text-white transition-all shadow-2xl">
             {t.footer.cta} <ExternalLink size={24} />
-          </a>
+          </button>
         </div>
         <div className="mt-40 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-zinc-600 text-[10px] font-black uppercase tracking-[0.2em] gap-8">
           <div className="text-2xl tracking-tighter text-zinc-100">UNDERDOGS<span className="text-blue-500">.</span></div>
@@ -651,6 +840,9 @@ const App: React.FC = () => {
         title={modalData?.title || ''} 
         content={modalData?.content || ''} 
       />
+
+      {/* Application Overlay Form */}
+      <ApplyOverlay isOpen={isApplyOpen} onClose={() => setIsApplyOpen(false)} />
     </div>
   );
 };
